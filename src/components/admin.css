@@ -1,0 +1,147 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 5px;
+}
+table,
+th,
+tr {
+  border: 1px solid;
+}
+
+.addEventForm {
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px;
+  border: 1px solid;
+}
+
+.btn {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 5px;
+  border-radius: 15%;
+  border: 0;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: darkgray;
+  color: black;
+}
+
+.showform-btn {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: medium;
+  border-radius: 5%;
+  border: 0;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.showform-btn:hover {
+  background-color: darkgray;
+  color: black;
+}
+
+.form-container-row {
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+  align-items: left;
+  /* gap: 5px; */
+  /* border: 1px solid yellow; */
+}
+
+input {
+  padding: 25px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* Table Styling */
+#eventsTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 500px;
+}
+
+#eventsTable td,
+#eventsTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#eventsTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#eventsTable tr:hover {
+  background-color: #ddd;
+}
+
+#eventsTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+.del-btn {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 7.5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.del-btn:hover {
+  background-color: darkgray;
+  color: black;
+}
+
+.table-btn {
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+}
+
+.table-btn:hover {
+  color: lightgray;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
