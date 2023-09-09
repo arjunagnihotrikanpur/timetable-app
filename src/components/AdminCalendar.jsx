@@ -47,6 +47,9 @@ const AdminCalendar = () => {
   // List of all events
   const [EVENTS, setEVENTS] = useState([]);
 
+  // Compressed List of All Events
+  const [dbEvents, setDbEvents] = useState([]);
+
   // State to show or hide event add form
   const [showForm, setShowForm] = useState(false);
 
@@ -67,12 +70,32 @@ const AdminCalendar = () => {
 
   // Function to Get Events from DB
   const getAllEvents = async () => {
+    setEVENTS([]);
     const querySnapshot = await getDocs(collection(db, "classes"));
     let e = [];
     querySnapshot.forEach((doc) => {
       e.push(doc.data());
     });
-    setEVENTS(e);
+
+    setDbEvents(e);
+
+    let allEvents = [];
+
+    e.forEach((el) => {
+      let events = generateEvents(
+        el.id,
+        el.title,
+        el.start,
+        el.end,
+        el.day,
+        el.startDate,
+        el.endDate
+      );
+      events.forEach((event) => allEvents.push(event));
+    });
+
+    console.log(allEvents);
+    setEVENTS(allEvents);
   };
 
   // Get events from db on pageload
@@ -80,20 +103,17 @@ const AdminCalendar = () => {
     getAllEvents();
   }, []);
 
-  // function to add event to DB
-  const addEvent = async (title, start, end, normalStart, normalEnd) => {
+  // new function to add event to DB
+  const addEvent = async (title, day, start, end, startDate, endDate) => {
     const newEvent = {
       id: uuid().slice(0, 8),
-      title: title,
-      start: start,
-      end: end,
-      normalStart: normalStart,
-      normalEnd: normalEnd,
+      title,
+      start,
+      day,
+      end,
+      startDate,
+      endDate,
     };
-
-    // Update State
-    setEVENTS((prev) => [...prev, newEvent]);
-
     // Add to DB
     try {
       await setDoc(doc(db, "classes", newEvent.id), newEvent);
@@ -112,13 +132,10 @@ const AdminCalendar = () => {
     getAllEvents();
   };
 
-  // Function to delete all events at once
-  const handleDeleteAll = async () => {
-    getAllEvents();
-    const ids = EVENTS.map((event) => event.id);
-    ids.forEach((id) => {
-      handleDeleteEvent(id);
-    });
+  // funciton to compress event format
+  const createEventList = (events) => {
+    // check which day is event and put it in ab object
+    // FORMAT
   };
 
   // function called on adding new event
@@ -135,26 +152,19 @@ const AdminCalendar = () => {
 
     const newStartDate = convertDateFormat(startDate);
     const newEndDate = convertDateFormat(endDate);
+    const e = {
+      title: eventName,
+      start: startTime,
+      end: endTime,
+      day: selectedDay.value,
+      startDate: newStartDate,
+      endDate: newEndDate,
+    };
 
-    const events = generateEvents(
-      eventName,
-      startTime,
-      endTime,
-      selectedDay.value,
-      newStartDate,
-      newEndDate
-    );
+    addEvent(e.title, e.day, e.start, e.end, e.startDate, e.endDate);
 
-    // Add each event to DB
-    events.forEach((event) => {
-      addEvent(
-        event.title,
-        event.start,
-        event.end,
-        event.normalStart,
-        event.normalEnd
-      );
-    });
+    getAllEvents();
+
     setShowForm(false);
   };
 
@@ -242,9 +252,8 @@ const AdminCalendar = () => {
                 Hide List
               </button>
               <EventsTable
-                EVENTS={EVENTS}
+                EVENTS={dbEvents}
                 handleDeleteEvent={handleDeleteEvent}
-                handleDeleteAll={handleDeleteAll}
               />
             </div>
           ) : (

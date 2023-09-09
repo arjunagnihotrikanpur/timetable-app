@@ -10,6 +10,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/admin" element={<AdminCalendar />} />
         <Route path="/" element={<Calendar />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

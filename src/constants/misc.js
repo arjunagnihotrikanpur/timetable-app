@@ -1,3 +1,6 @@
+// Random ID Generation
+import { v4 as uuid } from "uuid";
+
 export const convertDateFormat = (inputDate) => {
   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
   let date = inputDate.toLocaleDateString("en-IN", options).replace(/\//g, "-");
@@ -9,6 +12,7 @@ export const convertDateFormat = (inputDate) => {
 };
 
 export const generateEvents = (
+  id,
   name,
   startTime,
   endTime,
@@ -41,6 +45,7 @@ export const generateEvents = (
       const endEventTime = new Date(`${formattedDate}T${endTime}:00Z`);
 
       events.push({
+        id: id,
         title: name,
         start: startEventTime.toISOString().slice(0, -8),
         end: endEventTime.toISOString().slice(0, -8),

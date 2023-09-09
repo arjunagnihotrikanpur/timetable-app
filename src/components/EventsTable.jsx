@@ -1,5 +1,8 @@
 import React from "react";
 
+// Random ID Generation
+import { v4 as uuid } from "uuid";
+
 const EventsTable = ({ EVENTS, handleDeleteEvent, handleDeleteAll }) => {
   return (
     <>
@@ -9,20 +12,18 @@ const EventsTable = ({ EVENTS, handleDeleteEvent, handleDeleteAll }) => {
             <th>Title</th>
             <th>Start</th>
             <th>End</th>
-            <th>
-              <button className="table-btn" onClick={handleDeleteAll}>
-                Delete All
-              </button>
-            </th>
+            <th>Day</th>
+            <th></th>
           </tr>
         </thead>
 
         <tbody>
           {EVENTS.map((event) => (
-            <tr key={event.id}>
+            <tr key={uuid().slice(0, 8)}>
               <td>{event.title}</td>
-              <td>{event.normalStart}</td>
-              <td>{event.normalEnd}</td>
+              <td>{event.start}</td>
+              <td>{event.end}</td>
+              <td>{event.day}</td>
               <td>
                 <button
                   className="del-btn"

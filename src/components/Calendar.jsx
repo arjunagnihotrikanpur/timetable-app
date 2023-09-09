@@ -8,18 +8,42 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../config/Firebase";
 
+// Misc Functions
+import { convertDateFormat, generateEvents } from "../constants/misc";
+
 const Calendar = () => {
   const [EVENTS, setEVENTS] = useState([]);
+  // Compressed List of All Events
+  const [dbEvents, setDbEvents] = useState([]);
 
   // Function to Get Events from DB
   const getAllEvents = async () => {
+    setEVENTS([]);
     const querySnapshot = await getDocs(collection(db, "classes"));
     let e = [];
     querySnapshot.forEach((doc) => {
       e.push(doc.data());
     });
-    setEVENTS(e);
-    console.log(e);
+
+    setDbEvents(e);
+
+    let allEvents = [];
+
+    e.forEach((el) => {
+      let events = generateEvents(
+        el.id,
+        el.title,
+        el.start,
+        el.end,
+        el.day,
+        el.startDate,
+        el.endDate
+      );
+      events.forEach((event) => allEvents.push(event));
+    });
+
+    console.log(allEvents);
+    setEVENTS(allEvents);
   };
 
   useEffect(() => {
